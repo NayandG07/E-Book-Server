@@ -9,7 +9,7 @@ const multer = require('multer');
 const fs = require('fs');
 
 const app = express();
-const PORT = 5500;
+const PORT = 5501;
 
 // Debug middleware - logs all requests
 app.use((req, res, next) => {
@@ -43,7 +43,7 @@ const upload = multer({ storage: storage });
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cors({
-    origin: ['http://localhost:5500', 'https://your-frontend-domain.com']
+    origin: ['http://localhost:5501', 'https://your-frontend-domain.com']
 }));
 
 app.use('/uploads', express.static('uploads'));
