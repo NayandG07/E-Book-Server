@@ -42,7 +42,10 @@ const upload = multer({ storage: storage });
 // Middleware
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(cors());
+app.use(cors({
+    origin: ['http://localhost:5500', 'https://your-frontend-domain.com']
+}));
+
 app.use('/uploads', express.static('uploads'));
 app.use(express.static(path.join(__dirname)));
 
@@ -154,11 +157,15 @@ app.post('/login', (req, res) => {
     });
 });
 
-// Check admin status
+// // Check admin status
+// app.get('/admin', authenticateToken, authorizeAdmin, (req, res) => {
+//     const adminPath = path.join(__dirname, 'admin.html');
+//     console.log(`Serving admin page from: ${adminPath}`);
+//     res.sendFile(adminPath);
+// });
+
 app.get('/admin', authenticateToken, authorizeAdmin, (req, res) => {
-    const adminPath = path.join(__dirname, 'admin.html');
-    console.log(`Serving admin page from: ${adminPath}`);
-    res.sendFile(adminPath);
+    res.status(200).json({ message: 'Admin authenticated successfully' });
 });
 
 // Upload route with improved error handling
